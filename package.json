@@ -1,0 +1,26 @@
+{
+  "name": "aoo_to_xlsx",
+  "version": "1.0.2",
+  "main": "./dist/index.js",
+  "license": "MIT",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "./dist"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "exceljs": "^4.3.0"
+  },
+  "keywords": [
+    "array to xlsx",
+    "xlsx",
+    "excel",
+    "json to xlsx",
+    "json xlsx"
+  ]
+}
