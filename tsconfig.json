@@ -3,12 +3,12 @@
     "target": "es2016",
     "module": "commonjs",
     "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
+    "emitDeclarationOnly": true,
     "outDir": "./dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true
-  }
+  },
+  "exclude": ["./src/__mocks__/**/*", "./src/__tests__/**/*"]
 }

@@ -1,38 +1,60 @@
-import { Workbook } from 'exceljs';
+import { Workbook } from "exceljs";
+import { handleObjectTypes, reformatAoo } from "./format";
+import { ConvertOptions, DataSheets, DefaultDataType } from "./interfaces";
+import { join } from "path";
 
-export async function aoo_to_xlsx($data: Record<string, string>[]) {
-  const data = reformatAoo($data);
+export async function convertToSheet(
+  $data: Record<string, DefaultDataType>[],
+  options?: ConvertOptions
+) {
+  const data = reformatAoo(handleObjectTypes($data));
   const workbook = new Workbook();
-  const sheet = workbook.addWorksheet('New sheet');
-  const cols = data[0];
-  sheet.columns = Object.keys(cols).map((it: any) => ({
-    header: it,
-    key: it,
-    width: 20,
-  })) as any[];
-  sheet.addRows(data);
+  addSheet(workbook, {
+    data,
+    config: { options },
+    name: options?.filename ?? "Feuille",
+  });
 
+  if (options?.path) {
+    return await workbook.xlsx.writeFile(
+      join(options.path, `${options?.filename ?? "result"}.xlsx`)
+    );
+  }
   return await workbook.xlsx.writeBuffer();
 }
 
-export function reformatObject(
-  data: Record<string, any>,
-  result: Record<string, string> = {},
-  $key: string = ''
+export async function convertToSheets(
+  $data: DataSheets[],
+  options?: Omit<ConvertOptions, "headers">
 ) {
-  for (const key in data) {
-    if (typeof data[key] === 'string') {
-      result[$key + key] = data[key];
-    } else {
-      $key += `${key}.`;
-      reformatObject(data[key], result, $key);
-    }
+  const workbook = new Workbook();
+
+  for (const item of $data) {
+    addSheet(workbook, item);
   }
-  return result;
+
+  if (options?.path) {
+    return await workbook.xlsx.writeFile(
+      join(options.path, `${options?.filename ?? "result"}.xlsx`)
+    );
+  }
+  return await workbook.xlsx.writeBuffer();
 }
 
-export function reformatAoo(
-  data: Record<string, any>[]
-): Record<string, string>[] {
-  return data.map((item) => reformatObject(item));
+function addSheet(workbook: Workbook, item: DataSheets) {
+  const sheet = workbook.addWorksheet(item.name);
+
+  const cols = item.data.length === 0 ? [] : item.data[0];
+
+  sheet.columns = Object.keys(cols).map((it: any) => ({
+    header: item.config?.options?.headers
+      ? it in item.config?.options?.headers
+        ? item.config?.options?.headers[it]
+        : it
+      : it,
+    key: it,
+    width: 20,
+  })) as any[];
+  const data = reformatAoo(handleObjectTypes(item.data));
+  sheet.addRows(data);
 }

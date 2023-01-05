@@ -1,2 +1,1 @@
-export * from './lib';
-//# sourceMappingURL=index.d.ts.map
+export * from "./lib";

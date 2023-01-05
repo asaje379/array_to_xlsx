@@ -1,18 +1,1 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(require("./lib"), exports);
-//# sourceMappingURL=index.js.map
+"use strict";var i=Object.defineProperty;var k=Object.getOwnPropertyDescriptor;var O=Object.getOwnPropertyNames;var R=Object.prototype.hasOwnProperty;var D=(r,e)=>{for(var t in e)i(r,t,{get:e[t],enumerable:!0})},T=(r,e,t,n)=>{if(e&&typeof e=="object"||typeof e=="function")for(let a of O(e))!R.call(r,a)&&a!==t&&i(r,a,{get:()=>e[a],enumerable:!(n=k(e,a))||n.enumerable});return r};var p=r=>T(i({},"__esModule",{value:!0}),r);var h=(r,e,t)=>new Promise((n,a)=>{var o=f=>{try{c(t.next(f))}catch(s){a(s)}},d=f=>{try{c(t.throw(f))}catch(s){a(s)}},c=f=>f.done?n(f.value):Promise.resolve(f.value).then(o,d);c((t=t.apply(r,e)).next())});var F={};D(F,{convertToSheet:()=>j,convertToSheets:()=>C});module.exports=p(F);var g=require("exceljs");function b(r,e={},t=""){for(let n in r)typeof r[n]=="string"?e[t+n]=r[n]:(t+=`${n}.`,b(r[n],e,t));return e}function u(r){return r.map(e=>b(e))}function S(r){return typeof r=="boolean"?r?"1":"0":typeof r=="number"?""+r:r}function l(r){return r.map(e=>{let t={};for(let n in e)t[n]=S(e[n]);return t})}var m=require("path");function j(r,e){return h(this,null,function*(){var a,o;let t=u(l(r)),n=new g.Workbook;return w(n,{data:t,config:{options:e},name:(a=e==null?void 0:e.filename)!=null?a:"Feuille"}),e!=null&&e.path?yield n.xlsx.writeFile((0,m.join)(e.path,`${(o=e==null?void 0:e.filename)!=null?o:"result"}.xlsx`)):yield n.xlsx.writeBuffer()})}function C(r,e){return h(this,null,function*(){var n;let t=new g.Workbook;for(let a of r)w(t,a);return e!=null&&e.path?yield t.xlsx.writeFile((0,m.join)(e.path,`${(n=e==null?void 0:e.filename)!=null?n:"result"}.xlsx`)):yield t.xlsx.writeBuffer()})}function w(r,e){let t=r.addWorksheet(e.name),n=e.data.length===0?[]:e.data[0];t.columns=Object.keys(n).map(o=>{var d,c,f,s,x,y;return{header:(c=(d=e.config)==null?void 0:d.options)!=null&&c.headers&&o in((s=(f=e.config)==null?void 0:f.options)==null?void 0:s.headers)?(y=(x=e.config)==null?void 0:x.options)==null?void 0:y.headers[o]:o,key:o,width:20}});let a=u(l(e.data));t.addRows(a)}0&&(module.exports={convertToSheet,convertToSheets});

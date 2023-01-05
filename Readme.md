@@ -10,15 +10,40 @@ npm i aoo_to_xlsx
 
 ## Usage
 
-```typescript
-import { aoo_to_xlsx } from 'aoo_to_xlsx';
-import { join } from 'path';
-import { tmpdir } from 'os';
-import { writeFileSync } from 'fs';
+### convertToSheet
 
-async function downloadXlsx(data: Record<string, string>[], name: string) {
-  const buffer = await aoo_to_xlsx(data);
-  const path = join(tmpdir(), `${name}.xlsx`);
-  writeFileSync(path, Buffer.from(buffer));
+> Convert array to single sheet excel file
+
+#### Prototype
+```typescript
+convertToSheet($data: Record<string, DefaultDataType>[], options?: ConvertOptions): Promise<void | import("exceljs").Buffer>
+```
+
+```typescript
+import { convertToSheet } from 'aoo_to_xlsx'
+
+convertToSheet([
+  { name: "John DOE", age: 45, enabled: true },
+  { name: "Jane XIE", age: 45, enabled: false },
+], {
+  filename: "non_empty_arr",
+});
+```
+
+## Interfaces
+
+### DefaultDataType
+```typescript
+type DefaultDataType = string | number | boolean;
+```
+
+### ConvertOptions
+```typescript
+interface ConvertOptions {
+  headers?: Record<string, string>;
+
+  // If it's defined, the function will genera
+  filename?: string;
+  path?: string;
 }
 ```
