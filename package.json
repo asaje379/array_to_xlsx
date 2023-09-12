@@ -1,6 +1,6 @@
 {
   "name": "aoo_to_xlsx",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "./dist/index.js",
   "license": "MIT",
   "types": "./dist/index.d.ts",
@@ -33,4 +33,3 @@
     "url": "https://github.com/asaje379/array_to_xlsx.git"
   }
 }
-
