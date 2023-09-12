@@ -4,6 +4,7 @@ export interface ConvertOptions {
   headers?: Record<string, string>;
   filename?: string;
   path?: string;
+  format?: 'xlsx' | 'csv';
 }
 
 export interface DataSheets {

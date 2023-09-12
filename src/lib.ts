@@ -1,31 +1,33 @@
-import { Workbook } from "exceljs";
-import { handleObjectTypes, reformatAoo } from "./format";
-import { ConvertOptions, DataSheets, DefaultDataType } from "./interfaces";
-import { join } from "path";
+import { Workbook } from 'exceljs';
+import { handleObjectTypes, reformatAoo } from './format';
+import { ConvertOptions, DataSheets, DefaultDataType } from './interfaces';
+import { join } from 'path';
 
 export async function convertToSheet(
   $data: Record<string, DefaultDataType>[],
-  options?: ConvertOptions
+  options?: ConvertOptions,
 ) {
   const data = reformatAoo(handleObjectTypes($data));
   const workbook = new Workbook();
   addSheet(workbook, {
     data,
     config: { options },
-    name: options?.filename ?? "Feuille",
+    name: options?.filename ?? 'Feuille',
   });
 
+  const format = options?.format ?? 'xlsx';
+
   if (options?.path) {
-    return await workbook.xlsx.writeFile(
-      join(options.path, `${options?.filename ?? "result"}.xlsx`)
+    return await workbook[format].writeFile(
+      join(options.path, `${options?.filename ?? 'result'}.${format}`),
     );
   }
-  return await workbook.xlsx.writeBuffer();
+  return await workbook[format].writeBuffer();
 }
 
 export async function convertToSheets(
   $data: DataSheets[],
-  options?: Omit<ConvertOptions, "headers">
+  options?: Omit<ConvertOptions, 'headers'>,
 ) {
   const workbook = new Workbook();
 
@@ -33,12 +35,14 @@ export async function convertToSheets(
     addSheet(workbook, item);
   }
 
+  const format = options?.format ?? 'xlsx';
+
   if (options?.path) {
-    return await workbook.xlsx.writeFile(
-      join(options.path, `${options?.filename ?? "result"}.xlsx`)
+    return await workbook[format].writeFile(
+      join(options.path, `${options?.filename ?? 'result'}.${format}`),
     );
   }
-  return await workbook.xlsx.writeBuffer();
+  return await workbook[format].writeBuffer();
 }
 
 function addSheet(workbook: Workbook, item: DataSheets) {
