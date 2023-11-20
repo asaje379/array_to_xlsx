@@ -17,6 +17,20 @@ describe('convert arr to xlsx file on sheet', () => {
     expect(buffer).toBeDefined();
   });
 
+  it('should convert non empty array with ; seperator', async () => {
+    const buffer = convertToSheet(simpleArr, {
+      filename: 'non_empty_arr_with_dot_coma',
+      path: './src/__mocks__',
+      options: {
+        formatterOptions: {
+          delimiter: ';',
+        },
+      },
+      format: 'csv',
+    });
+    expect(buffer).toBeDefined();
+  });
+
   it('should convert non empty array with headers', async () => {
     const buffer = convertToSheet(simpleArr, {
       filename: 'non_empty_arr_with_header',

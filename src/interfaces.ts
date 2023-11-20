@@ -5,6 +5,7 @@ export interface ConvertOptions {
   filename?: string;
   path?: string;
   format?: 'xlsx' | 'csv';
+  options?: any;
 }
 
 export interface DataSheets {

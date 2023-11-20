@@ -20,6 +20,7 @@ export async function convertToSheet(
   if (options?.path) {
     return await workbook[format].writeFile(
       join(options.path, `${options?.filename ?? 'result'}.${format}`),
+      options?.options ? options?.options : undefined,
     );
   }
   return await workbook[format].writeBuffer();
@@ -40,6 +41,7 @@ export async function convertToSheets(
   if (options?.path) {
     return await workbook[format].writeFile(
       join(options.path, `${options?.filename ?? 'result'}.${format}`),
+      options?.options ? options?.options : undefined,
     );
   }
   return await workbook[format].writeBuffer();
